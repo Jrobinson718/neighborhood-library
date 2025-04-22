@@ -61,4 +61,10 @@ public class Book {
 
     }
 
+    @Override
+    public String toString(){
+        return id + ": " + title + " (" + isbn +") ";
+
+    }
+
 }
