@@ -42,7 +42,7 @@ public class Main {
 
     public static void ShowScreenHome() {
 
-        String homeScreenPrompt = "Welcome to the library\n" +
+        String homeScreenPrompt = "\nWelcome to the library\n" +
                 "Please select an option from the following\n" +
                 "    1 - Show available books\n" +
                 "    2 - Show checked out books\n" +
@@ -59,7 +59,7 @@ public class Main {
                 case 1:
                     ShowScreenAvailableBooks();
                     break;
-                    
+
                 case 2:
                     ShowScreenCheckedOutBooks();
                     break;
@@ -76,7 +76,7 @@ public class Main {
 
     }
 
-    public static void ShowScreenAvailableBooks(){
+    private static void ShowScreenAvailableBooks(){
         System.out.println("\nCurrently available books:");
         for (Book book : library){
 
@@ -85,16 +85,68 @@ public class Main {
 
             }
         }
+
+        System.out.print("\nEnter the book number to check out (0 to cancel): ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (choice > 0 && choice <= library.length){
+            Book selectedBook = library[choice - 1];
+            if(!selectedBook.isCheckedOut()){
+                System.out.print("Please enter your name: ");
+                String name = scanner.nextLine();
+                selectedBook.checkOut(name);
+                System.out.printf("\n%s, You've successfully checked out %s%n", name, selectedBook.getTitle());
+
+            }
+        } else if (choice != 0) {
+            System.out.println("Please select a valid book");
+
+        }
+
     }
 
-    public static void ShowScreenCheckedOutBooks(){
+    private static void ShowScreenCheckedOutBooks(){
+        int checkedOutCount = 0;
         System.out.println("\nChecked out books:");
+
         for (Book book : library){
 
             if (book.isCheckedOut()){
-                System.out.println(book +" (Checked out to: " + book.getCheckedOutTo() + ")");
+                System.out.println(book +" (Checked out to: " + book.getCheckedOutTo() + ")\n");
+                checkedOutCount++;
 
             }
+        }
+
+        if (checkedOutCount > 0){
+            System.out.print("\nEnter \"C\" to check in a book." +
+                    "\nEnter\"X\" to exit back to home screen.\n");
+            String input = scanner.nextLine().toUpperCase();
+
+            switch (input){
+                case "C":
+                    System.out.print("Enter the book number you'd like to check in: ");
+                    int bookNumber = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if(bookNumber > 0 && bookNumber <= library.length){
+                        Book checkedOutBook = library[bookNumber - 1];
+                        if (checkedOutBook.isCheckedOut()){
+                            System.out.printf("\nThank you %s, %s has been checked back in.\n",
+                                    checkedOutBook.getCheckedOutTo(),
+                                    checkedOutBook.getTitle());
+                            checkedOutBook.checkIn();;
+                        }
+                    }
+                case "X":
+                    return;
+
+                default:
+                    System.out.println("Invalid selection.");
+            }
+        }else {
+            System.out.println("\nNo books currently checked out.");
         }
     }
 }
