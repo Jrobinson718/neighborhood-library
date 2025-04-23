@@ -71,7 +71,7 @@ public class Main {
                     break;
 
                 default:
-                    System.out.println("Not a valid option, please try again.\n");
+                    System.out.println("Not a valid option, please try again.");
 
             }
         } while (option != 0);
@@ -101,7 +101,7 @@ public class Main {
 
             }
         } else if (choice != 0) {
-            System.out.println("Please select a valid book");
+            System.out.println("Not a valid option, please try again.");
 
         }
 
