@@ -63,8 +63,7 @@ public class Book {
 
     @Override
     public String toString(){
-        return id + ": " + title + " (" + isbn +") ";
+        return String.format("%-5d %-70s %21s", id, title, isbn);
 
     }
-
 }

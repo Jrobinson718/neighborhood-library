@@ -8,11 +8,12 @@ public class Main {
     private static Book[] library = getCurrentLibrary();
 
     public static void main(String[] args) {
+        // Begin program by welcoming user and prompting for an input to explore the library
         ShowScreenHome();
 
     }
 
-
+    // Initializes a library using the parameters made in my book class
     private static Book[] getCurrentLibrary() {
         Book[] library = new Book[20];
 
@@ -42,6 +43,7 @@ public class Main {
 
     public static void ShowScreenHome() {
 
+        // Beginning of program prompt. Uses \n to print on a new line
         String homeScreenPrompt = "\nWelcome to the library\n" +
                 "Please select an option from the following\n" +
                 "    1 - Show available books\n" +
@@ -50,6 +52,7 @@ public class Main {
                 "(1,2,0): ";
 
         int option;
+        // Locks the user into the home page until they press 0 and exit the program using a do/while loop
         do {
             System.out.print(homeScreenPrompt);
             option = scanner.nextInt();
@@ -77,6 +80,7 @@ public class Main {
     }
 
     private static void ShowScreenAvailableBooks(){
+        // Print out each book that is not currently checked out.
         System.out.println("\nCurrently available books:");
         for (Book book : library){
 
@@ -86,6 +90,7 @@ public class Main {
             }
         }
 
+        //Give the user the ability to pick a book to check out by id.
         System.out.print("\nEnter the book number to check out (0 to cancel): ");
         int choice = scanner.nextInt();
         scanner.nextLine();
@@ -95,7 +100,7 @@ public class Main {
             if(!selectedBook.isCheckedOut()){
                 System.out.print("Please enter your name: ");
                 String name = scanner.nextLine();
-                selectedBook.checkOut(name);
+                selectedBook.checkOut(name); //Assign the users name to getCheckedOutTo()
                 System.out.printf("\n%s, You've successfully checked out %s%n", name, selectedBook.getTitle());
 
             }
@@ -107,11 +112,14 @@ public class Main {
     }
 
     private static void ShowScreenCheckedOutBooks(){
+        //Creates variable checked out count to keep count of how many books are nto available
         int checkedOutCount = 0;
         System.out.println("\nChecked out books:");
 
+        // Saves each book one at a time into the variable book to store its information
         for (Book book : library){
 
+            // Checks to see if the book is checked out and if it is increase checked out count by 1
             if (book.isCheckedOut()){
                 System.out.println(book +" (Checked out to: " + book.getCheckedOutTo() + ")\n");
                 checkedOutCount++;
@@ -119,29 +127,33 @@ public class Main {
             }
         }
 
+        // Checks to see if the checked out count is greater than 0 before printing an option menu for check in
         if (checkedOutCount > 0){
             System.out.print("\nEnter \"C\" to check in a book." +
-                    "\nEnter\"X\" to exit back to home screen.\n");
+                    "\nEnter \"X\" to exit back to home screen.\n" +
+                    "C  -  Check in\nX  -  Home\n");
             String input = scanner.nextLine().toUpperCase();
-
+            // Based on user input (C to check in) allows the user to check back in their book and thanks them
             switch (input){
                 case "C":
                     System.out.print("Enter the book number you'd like to check in: ");
                     int bookNumber = scanner.nextInt();
                     scanner.nextLine();
 
+                    // Checks to make sure the users input was not negative as well as not greater than the amount of books in the library
                     if(bookNumber > 0 && bookNumber <= library.length){
                         Book checkedOutBook = library[bookNumber - 1];
                         if (checkedOutBook.isCheckedOut()){
                             System.out.printf("\nThank you %s, %s has been checked back in.\n",
-                                    checkedOutBook.getCheckedOutTo(),
+                                    checkedOutBook.getCheckedOutTo(), // Gets checkedOutTo before checking in the book in order to use the users name without asking for it
                                     checkedOutBook.getTitle());
-                            checkedOutBook.checkIn();;
+                            checkedOutBook.checkIn();
                         }
                     }
                 case "X":
                     return;
 
+                    // Error handling for invalid inputs ( bookNumber >= 21 or <= 0)
                 default:
                     System.out.println("Invalid selection.");
             }
