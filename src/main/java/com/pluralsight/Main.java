@@ -127,7 +127,7 @@ public class Main {
         if (checkedOutCount > 0) {
             String input = console.promptForString("\nEnter \"C\" to check in a book." +
                     "\nEnter \"X\" to exit back to home screen.\n" +
-                    "C  -  Check in\nX  -  Home\n");
+                    "C  -  Check in\nX  -  Home\n").toUpperCase();
             // Based on user input (C to check in) allows the user to check back in their book and thanks them
             switch (input) {
                 case "C":
