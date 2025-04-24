@@ -1,6 +1,10 @@
 package com.pluralsight;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class Main {
 
@@ -15,30 +19,32 @@ public class Main {
 
     // Initializes a library using the parameters made in my book class
     private static Book[] getCurrentLibrary() {
-        Book[] library = new Book[20];
 
-        library[0] = new Book(1, "ISBN 978-1-78862-355-1", "The Misadventures of Lauryn Hill");
-        library[1] = new Book(2, "ISBN 978-0-316-76948-0", "To Kill a Mockingbird");
-        library[2] = new Book(3, "ISBN 978-0-06-112008-4", "1984");
-        library[3] = new Book(4, "ISBN 978-0-7432-7356-5", "The Great Gatsby");
-        library[4] = new Book(5, "ISBN 978-0-452-28423-4", "Animal Farm");
-        library[5] = new Book(6, "ISBN 978-0-553-21311-0", "The Hobbit");
-        library[6] = new Book(7, "ISBN 978-0-395-19395-7", "The Catcher in the Rye");
-        library[7] = new Book(8, "ISBN 978-0-679-72325-5", "Brave New World");
-        library[8] = new Book(9, "ISBN 978-0-141-43957-6", "Lord of the Flies");
-        library[9] = new Book(10, "ISBN 978-0-7475-5100-8", "Harry Potter and the Philosopher's Stone");
-        library[10] = new Book(11, "ISBN 978-0-545-01022-1", "The Hunger Games");
-        library[11] = new Book(12, "ISBN 978-0-316-76948-1", "To Kill a Mockingbird (Special Edition)");
-        library[12] = new Book(13, "ISBN 978-0-06-112008-5", "1984 (Anniversary Edition)");
-        library[13] = new Book(14, "ISBN 978-0-7432-7356-6", "The Great Gatsby (Illustrated)");
-        library[14] = new Book(15, "ISBN 978-0-452-28423-5", "Animal Farm (Revised Edition)");
-        library[15] = new Book(16, "ISBN 978-0-553-21311-1", "The Hobbit (Collector's Edition)");
-        library[16] = new Book(17, "ISBN 978-0-395-19395-8", "The Catcher in the Rye (Reissue)");
-        library[17] = new Book(18, "ISBN 978-0-679-72325-6", "Brave New World (Updated Version)");
-        library[18] = new Book(19, "ISBN 978-0-141-43957-7", "Lord of the Flies (School Edition)");
-        library[19] = new Book(20, "ISBN 978-0-7475-5100-9", "Harry Potter and the Philosopher's Stone (10th Anniversary)");
+        try {
+            FileReader fr = new FileReader("books.txt");
+            BufferedReader reader = new BufferedReader(fr);
 
-        return library;
+            Book[] booksTemp = new Book[1000];
+            int size = 0;
+            String dataString;
+
+            while ((dataString = reader.readLine()) != null){
+
+                booksTemp[size] = getBookFromEncodedString(dataString);
+
+                size++;
+
+            }
+
+            Book[] booksFinal =Arrays.copyOf(booksTemp, size);
+
+            return booksFinal;
+        }catch (IOException e) {
+            throw new RuntimeException();
+
+        }
+
+
     }
 
     public static void ShowScreenHome() {
@@ -105,6 +111,19 @@ public class Main {
 
         }
 
+    }
+
+    private static Book getBookFromEncodedString(String encodedBook){
+
+        String[] temp = encodedBook.split(Pattern.quote("|"));
+
+        int id = Integer.parseInt(temp[0]);
+        String isbn = temp[1];
+        String title = temp[2];
+
+
+        Book result = new Book(id, isbn, title);
+        return result;
     }
 
     private static void ShowScreenCheckedOutBooks() {
