@@ -1,5 +1,5 @@
 1|ISBN 978-1-78862-355-1|The Misadventures of Lauryn Hill
-2|ISBN 978-0-316-76948-0|To Kill a Mockingbird
+2|ISBN 978-0-316-76948-0|To Kill a Mockingbird|Johnathan
 3|ISBN 978-0-06-112008-4|1984
 4|ISBN 978-0-7432-7356-5|The Great Gatsby
 5|ISBN 978-0-452-28423-4|Animal Farm
@@ -15,6 +15,6 @@
 15|ISBN 978-0-452-28423-5|Animal Farm (Revised Edition)
 16|ISBN 978-0-553-21311-1|The Hobbit (Collector's Edition)
 17|ISBN 978-0-395-19395-8|The Catcher in the Rye (Reissue)
-18|ISBN 978-0-679-72325-6|Brave New World (Updated Version)
-19|ISBN 978-0-141-43957-7|Lord of the Flies (School Edition)
-20|ISBN 978-0-7475-5100-9|Harry Potter and the Philosopher's Stone (10th Anniversary)
+18|ISBN 978-0-679-72325-6|Brave New World (Updated Version)|Freddy
+19|ISBN 978-0-141-43957-7|Lord of the Flies (School Edition)|Johnathan
+20|ISBN 978-0-7475-5100-9|Harry Potter and the Philosopher's Stone (10th Anniversary)|Johnathan

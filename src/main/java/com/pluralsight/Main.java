@@ -1,27 +1,51 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class Main {
 
     private static Console console = new Console();
-    private static Book[] library = getCurrentLibrary();
+    private static Book[] library;
+    public static String fileName;
 
     public static void main(String[] args) {
+
+        fileName = "books.txt";
+        library = getCurrentLibrary();
+
         // Begin program by welcoming user and prompting for an input to explore the library
         ShowScreenHome();
 
     }
 
     // Initializes a library using the parameters made in my book class
+
+    private static void saveAllDataToDisk(){
+
+
+        try {
+            FileWriter fw = new FileWriter(fileName);
+            BufferedWriter writer = new BufferedWriter(fw);
+
+            for (Book b : library){
+                writer.write(b.getEncodedText() + "\n");
+
+            }
+
+            writer.close();
+        }catch (Exception e){
+            System.out.println("There was an ERROR saving the data.");
+
+        }
+
+    }
+
     private static Book[] getCurrentLibrary() {
 
         try {
-            FileReader fr = new FileReader("books.txt");
+            FileReader fr = new FileReader(fileName);
             BufferedReader reader = new BufferedReader(fr);
 
             Book[] booksTemp = new Book[1000];
@@ -35,6 +59,8 @@ public class Main {
                 size++;
 
             }
+
+            reader.close();
 
             Book[] booksFinal =Arrays.copyOf(booksTemp, size);
 
@@ -104,6 +130,7 @@ public class Main {
                 String name = console.promptForString("\nWhat is your name: ");
                 selectedBook.checkOut(name); //Assign the users name to getCheckedOutTo()
                 System.out.printf("\n%s, You've successfully checked out %s%n", name, selectedBook.getTitle());
+                saveAllDataToDisk();
 
             }
         } else if (choice != 0) {
@@ -121,8 +148,12 @@ public class Main {
         String isbn = temp[1];
         String title = temp[2];
 
-
         Book result = new Book(id, isbn, title);
+
+        if(temp.length > 3){
+            result.checkOut(temp[3].trim());
+        }
+        ;
         return result;
     }
 
@@ -173,4 +204,6 @@ public class Main {
             System.out.println("\nNo books currently checked out.");
         }
     }
+
+
 }

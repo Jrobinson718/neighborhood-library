@@ -49,6 +49,7 @@ public class Book {
     }
 
 
+
     public void checkOut(String name){
         this.isCheckedOut = true;
         this.checkedOutTo = name;
@@ -66,4 +67,15 @@ public class Book {
         return String.format("%-5d %-60s %21s", id, title, isbn);
 
     }
+
+    public String getEncodedText(){
+//        String result;
+//        if(this.isCheckedOut){
+//            result = ;
+//        }else {
+//            result = this.id + "|" + this.isbn + "|" + this.title;
+//        }
+        return this.id + "|" + this.isbn + "|" + this.title + (this.isCheckedOut ? "|" + this.checkedOutTo : "");
+    }
+
 }
